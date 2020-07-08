@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Route, Switch, Redirect } from "react-router-dom";
 
 //Container
+import Home from './page/home/Home'
 import System from './page/System'
 import MenuContainer from './menu/MenuContainer'
 import Directory from './page/system/Directory'
@@ -33,15 +34,25 @@ class MainScreen extends Component {
   render() {
     return (
       <Bound>
-        <MenuContainer/>
+        <MenuContainer />
         <Switch>
+          <Route exact path="/home"
+            render={(props) => {
+              console.log('props -- route',props)
+              return (
+                <div className='main-bound'>
+                  <Home />
+                </div>
+              )
+            }}
+          />
           <Route
             exact
             path="/"
             render={() => {
               return (
                 <div className='main-bound'>
-                    <System/>
+                  <System />
                 </div>
               )
             }}
@@ -53,7 +64,7 @@ class MainScreen extends Component {
             render={() => {
               return (
                 <div className='main-bound'>
-                    <Directory/>
+                  <Directory />
                 </div>
               )
             }}
@@ -65,7 +76,7 @@ class MainScreen extends Component {
             render={() => {
               return (
                 <div className='main-bound'>
-                    <User/>
+                  <User />
                 </div>
               )
             }}
@@ -77,7 +88,7 @@ class MainScreen extends Component {
             render={() => {
               return (
                 <div className='main-bound'>
-                    <UserGroup/>
+                  <UserGroup />
                 </div>
               )
             }}
@@ -89,7 +100,7 @@ class MainScreen extends Component {
             render={() => {
               return (
                 <div className='main-bound'>
-                    <Menu/>
+                  <Menu />
                 </div>
               )
             }}
@@ -101,7 +112,7 @@ class MainScreen extends Component {
             render={() => {
               return (
                 <div className='main-bound'>
-                    <Post/>
+                  <Post />
                 </div>
               )
             }}
@@ -113,12 +124,12 @@ class MainScreen extends Component {
             render={() => {
               return (
                 <div className='main-bound'>
-                    <Category/>
+                  <Category />
                 </div>
               )
             }}
           />
-          <Redirect to="/"/>;
+          <Redirect to="/" />;
         </Switch>
       </Bound>
     );

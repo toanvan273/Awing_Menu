@@ -1,5 +1,10 @@
 export const data = [
     {
+        menuId: 100,
+        name: 'TRANG CHỦ',
+        path: '/home',
+    },
+    {
         menuId: 1003,
         name: 'HỆ THỐNG',
         path: '#',
@@ -29,6 +34,23 @@ export const data = [
     {
         menuId: 42,
         name: 'BÀI VIẾT',
+        path: '#',
+        children: [
+            {
+                menuId: 421,
+                name: 'Quản trị bài viết',
+                path: '/Post'
+            },
+            {
+                menuId: 422,
+                name: 'Quản trị chuyên mục',
+                path: '/Category'
+            }
+        ]
+    },
+    {
+        menuId: 43,
+        name: 'SCREEN',
         path: '#',
         children: [
             {

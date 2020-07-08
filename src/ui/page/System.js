@@ -18,7 +18,7 @@ class System extends Component {
     render() {
         return (
             <Bound>
-              System
+              404 | Page not found
             </Bound>
         )
     }

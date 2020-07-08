@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 //Componet
 import MenuItem from './MenuItem';
 
+import { NavLink } from 'react-router-dom';
 // data
 import { data } from '../../data/dataConfig'
 
@@ -32,6 +33,11 @@ const Bound = styled.div`
             height: 12px;
             /* transform: rotate(90deg); */
         }
+        a{
+        font-size: 14px;
+        text-decoration: none;
+        color: #595959;
+        }
     }
     .sub-menu{
         padding-left: 40px;
@@ -42,7 +48,7 @@ const Bound = styled.div`
             transform: rotate(90deg);
         }
     }
-    .sub-active{
+    .selected{
         border-left: 1px solid red;
         background: gainsboro;
         font-weight: 900;
@@ -61,20 +67,28 @@ class MenuContainer extends Component {
         let pathActive = window.location.pathname
         let main, sub
         data.forEach((element, index) => {
-            element.children.forEach((item, i) => {
-                if (item.path === pathActive) {
+            console.log(element)
+            if(element.children){
+                element.children.forEach((item, i) => {
+                    if (item.path === pathActive) {
+                        main = index
+                        sub = i
+                    }
+                })
+            }else{
+                if(element.path === pathActive){
                     main = index
-                    sub = i
                 }
-            })
+            }
+                
         })
-        if(main!==undefined&&sub!==undefined){
+        if (main !== undefined || sub !== undefined) {
             this.onChoseMenu(main)
             this.setState({
-                indexSubmenu:sub
+                indexSubmenu: sub
             })
         }
-       
+
     }
     onChoseMenu = index => {
         const { indexMainmenu } = this.state
@@ -83,7 +97,7 @@ class MenuContainer extends Component {
             oldMenu.classList.remove('main-active')
         }
         let mainMenu = document.getElementById('main-menu-' + index)
-        if(mainMenu){
+        if (mainMenu) {
             mainMenu.classList.add('main-active')
         }
         this.setState({
@@ -104,6 +118,7 @@ class MenuContainer extends Component {
     }
     render() {
         const { indexMainmenu, indexSubmenu } = this.state
+        // console.log('render: ',data)
         return (
             <Bound>
                 <div id='menu-raw'>
@@ -116,14 +131,25 @@ class MenuContainer extends Component {
                                 <div className='item-icon'>
                                     <div className='icon'></div>
                                 </div>
-                                <span>{item.name}</span>
+                                {item.path !== "#" ?
+                                    <NavLink
+                                        to={item.path}
+                                    >
+                                        {item.name}
+                                    </NavLink>
+                                    :
+                                    <span>{item.name}</span>
+                                }
+
                             </div>
+                            {/* ---- */}
                             <div className='sub-menu'>
                                 {indexMainmenu === i &&
+                                    item.children &&
                                     item.children.map((child, index) => {
-                                        return <MenuItem 
-                                        onActiveIndex={indexSubmenu}
-                                        data={child} key={index} index={index} getIndex={this.getIndex} />
+                                        return <MenuItem
+                                            onActiveIndex={indexSubmenu}
+                                            data={child} key={index} index={index} getIndex={this.getIndex} />
                                     })
                                 }
                             </div>
